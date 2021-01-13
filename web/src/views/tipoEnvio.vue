@@ -26,7 +26,7 @@
 				<small v-if="msjErrorFecha.length>0">{{msjErrorFecha[0]}}</small>
 			</label>
 			<label  v-if="model.deliveryType==2">
-				<span>Franja horaria</span>
+				<span title="Esta es la hora en la que pasaran a recojer su paquete y proceder a entregarlo.">Franja horaria</span>
 				<select v-if="franjas.length==0" >
 					<option value="-1" selected>No hay Horarios Disponibles para esta fecha</option>
 
@@ -41,14 +41,14 @@
 			<label>
 				<span>Detalle Lugar de Origen</span>
 				<strong>{{direccionOrigen.street}}, {{direccionOrigen.streetNumber}}</strong>
-				<textarea id="observacionOrigen" rows="4"  v-model="model.observacionOrigen" placeholder="Nro.Puerta, Edificio, Apto, referencia, etc. "></textarea>
-				<small v-if="msjErrorOrigen.length>0">{{msjErrorOrigen[0]}}</small>
+				<!-- <textarea id="observacionOrigen" rows="4"  v-model="model.observacionOrigen" placeholder="Nro.Puerta, Edificio, Apto, referencia, etc."></textarea> -->
+				<!-- <small v-if="msjErrorOrigen.length>0">{{msjErrorOrigen[0]}}</small> -->
 			</label>
 			<label >
 				<span>Detalle Lugar de Destino</span>
 				<strong >{{direccionDestino.street}}, {{direccionDestino.streetNumber}}</strong>
-				<textarea id="observacionDestino" rows="4"  v-model="model.observacionDestino" placeholder="Nro.Puerta, Edificio, Apto, referencia, etc."></textarea>
-				<small v-if="msjErrorDestino.length>0">{{msjErrorDestino[0]}}</small>
+				<!-- <textarea id="observacionDestino" rows="4"  v-model="model.observacionDestino" placeholder="Nro.Puerta, Edificio, Apto, referencia, etc."></textarea> -->
+			<!-- 	<small v-if="msjErrorDestino.length>0">{{msjErrorDestino[0]}}</small> -->
 			</label>
 		</section>
 	</article>
@@ -113,7 +113,7 @@ export default {
 			return errors
 		},
 
-		msjErrorOrigen(){
+		/* msjErrorOrigen(){
 			const errors = []
 			if (!this.dataValid.observacionOrigen.touch) return errors
 			if(this.model.observacionOrigen==null&&this.model.observacionOrigen!='') errors.push('Especifique algún detalle del origen')
@@ -125,7 +125,7 @@ export default {
 			if (!this.dataValid.observacionDestino.touch) return errors
 			if(this.model.observacionDestino==null&&this.model.observacionDestino!='') errors.push('Especifique algún detalle del destino')
 			return errors
-		},
+		}, */
 
 		minDate(){
 			return this.$moment().format('YYYY-MM-DD')
@@ -134,23 +134,23 @@ export default {
 		valid(){
 			if(this.model.deliveryType==1){
 				return this.model.vehicleType != null &&
-						this.model.observacionDestino!=null&&
-						this.model.observacionOrigen!=null&&
-						this.msjErrorVehiculo.length==0 &&
-						this.msjErrorDestino.length==0&&
-						this.msjErrorOrigen.length==0
+						/* this.model.observacionDestino!=null&&
+						this.model.observacionOrigen!=null&& */
+						this.msjErrorVehiculo.length==0 /* && */
+						/* this.msjErrorDestino.length==0&& */
+						/* this.msjErrorOrigen.length==0 */
 			}
 			else{
 				return this.model.vehicleType != null &&
 					this.model.schedule !=null &&
 					this.model.serviceDate !=null &&
-					this.model.observacionDestino!=null&&
-					this.model.observacionOrigen!=null&&
+				/* 	this.model.observacionDestino!=null&&
+					this.model.observacionOrigen!=null&& */
 					this.msjErrorVehiculo.length==0&&
 					this.msjErrorFecha.length==0&&
-					this.msjErrorFranja.length==0&&
-					this.msjErrorDestino.length==0&&
-					this.msjErrorOrigen.length==0
+					this.msjErrorFranja.length==0/* && */
+					/* this.msjErrorDestino.length==0&&
+					this.msjErrorOrigen.length==0 */
 			}
 			
 		},
@@ -193,7 +193,7 @@ export default {
 		}
 	},
 	mounted(){
-		this.model.deliveryType = this.model.deliveryType==2?this.Express?1:2:2
+		this.model.deliveryType = this.model.deliveryType==1 ? this.Express ? 1 :1 :2 /* this.model.deliveryType==2?this.Express?1:2:2 */
 
 	},
 
@@ -216,8 +216,8 @@ export default {
 					this.dataValid.serviceDate.touch = true 
 					this.dataValid.schedule.touch  = true
 					this.dataValid.vehicleType.touch  = true
-					this.dataValid.observacionOrigen.touch  = true
-					this.dataValid.observacionDestino.touch  = true
+					/* this.dataValid.observacionOrigen.touch  = true
+					this.dataValid.observacionDestino.touch  = true */
 				}
 			}
 			else{

@@ -1,7 +1,7 @@
 import axios  from 'axios';
 import config from './config';
-axios.defaults.crossDomain = true
-axios.defaults.withCredentials = true
+/* axios.defaults.crossDomain = true
+axios.defaults.withCredentials = true */
 //Url general de los servicios
 export const API_URL_BACKEND = `${process.env.API_URL}`;
 

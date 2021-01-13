@@ -97,7 +97,7 @@ let initSteps = [
 		id:4,title:'Pago',subtitle:'Introduzca los datos para el pago del servicio',name:'4', view:'Pago', active:false, 
 		data:{
 			firstname: null,
-			lastname: null,
+			lastname: "",
 			email: null,
 			phone: null,
 			rut: null
@@ -117,7 +117,7 @@ state: {
 	token: null,
 	vehiculos:[],
 	franjas:[],
-	Express: false,
+	Express: true,
 	tarifa: null,
 	datosQuery: {
 		Negocio_Cliente: '',

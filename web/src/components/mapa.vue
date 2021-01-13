@@ -3,15 +3,15 @@
         <div class="grpDireccion">
             <label>
                 <span>{{title}}</span>
-                <GmapAutocomplete class="barramapa" @place_changed="setPlace" ref="direccion">
+                <GmapAutocomplete class="barramapa" @place_changed="setPlace" placeholder="Introduce Calle y Número de Puerta"  ref="direccion">
                 </GmapAutocomplete>
                 <small v-if="showError">{{errorMsg}}</small>
             </label>
-            <!-- <label class="streetNUmber">
-                <span>N° de puerta</span>
-                <input type="text" v-model="streetNumber" @blur="emitStreet">   
+            <label class="streetNUmber">
+                <span>{{title2}}</span>
+                <input type="text" placeholder="Edificio, Apto, referencia, etc." v-model="complement" @blur="emitStreet">   
                 <small v-if="showErrorConfirm">{{errorMsgConfirm}}</small>
-            </label> -->
+            </label>
         </div>
         
 
@@ -20,7 +20,9 @@
             :center="centerMap"
             :zoom="zoom"
             map-type-id="terrain"
-           
+            :options="{
+                 streetViewControl: false,
+            }"
         >
             <!-- <GmapMarker
                 :key="index"
@@ -81,11 +83,11 @@ export default {
                 direccion: null
             })
         },
-        // numberStreet:{
-        //     required:true,
-        //     type: String,
-        //     default: ''
-        // },
+         title2:{
+             required:true,
+             type: String,
+             default: ''
+        },
 
     },
     data: () => ({
@@ -97,7 +99,7 @@ export default {
             lng: null
         },
         address: null,
-        streetNumber: null,
+        complement: null,
         zoom: 12
     }),
     computed:{
@@ -189,7 +191,7 @@ export default {
         }
     },
     mounted(){
-		this.streetNumber = 'n/a'
+		/* this.streetNumber = 'n/a' */
 		this.emitStreet()
         if(this.coods && this.coods.lat && this.coods.lng){
                 let place = {
@@ -216,8 +218,8 @@ export default {
                 this.setPlace(place)
                 //document.querySelector('.pac-target-input').value = this.coods.direccion
         }
-        console.log(this.numberStreet)
-        this.numberStreet!=''?this.streetNumber=this.numberStreet:this.streetNumber=''
+        /* console.log(this.numberStreet) */
+        /* this.numberStreet!=''?this.streetNumber=this.numberStreet:this.streetNumber='' */
     }
 
 }
@@ -243,13 +245,18 @@ export default {
     #mapaG label{
         display: flex;
 		flex-direction: column;
-		width: 60%;
+		width: 35%;
 		max-width: 600px;
 		min-width: 260px;
-		padding: 10px;
+		padding: 10px 10px 10px 0;
 		text-align: left;
 		position: relative;
 	}
+
+    #mapaG .streetNUmber{
+        margin-left: 10px;
+    }
+
     #mapaG .grpDireccion {
         width: 100%;
         display: flex;
@@ -276,10 +283,7 @@ export default {
         width: 100%;
     }
 
-    #mapaG .streetNUmber{
-        width: 20%;
-        min-width: 140px;
-    }
+    
 
      @media screen and (max-width: 750px) {
         #mapaG #mapalayer{
@@ -289,6 +293,16 @@ export default {
         #mapaG{
             padding: 0 10px;
         }
+        
+    }
+     @media screen and (max-width: 700px) {
+        #mapaG label{
+            width: 100%;
+            padding: 10px 0px;
+        }
+        #mapaG .streetNUmber{
+        margin-left: 0px;
+    }
         
     }
     

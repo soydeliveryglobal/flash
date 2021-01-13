@@ -119,7 +119,7 @@
 							<p>{{steps.find(x=> x.id==3).data.serviceDate}}</p>
 						</li>
 						<li class="fondo">
-							<p><strong>FRANJA HORARIA:</strong></p>
+							<p><strong >FRANJA HORARIA:</strong></p>
 							<p>{{franjas.find(y=>y.NegocioFranjaId==steps.find(x=> x.id==3).data.schedule).NegocioFranjaDescripcion}}</p>
 						</li>
 						<li >
@@ -155,7 +155,7 @@ export default {
     step:null,
 	model: {
 		firstname: null,
-		lastname: null,
+		lastname: "",
 		email: null,
 		phone: null
 	},
@@ -233,7 +233,7 @@ export default {
 		if(this.tipoPersona==1){
 			console.log('tipo 1')
 			return this.model.firstname != null &&
-					this.model.lastname !=null &&
+					this.model.lastname !=null && this.model.lastname !="" &&
 					this.model.email !=null &&
 					this.model.phone !=null &&
 					this.msjErrorNombre.length==0&&
@@ -281,7 +281,7 @@ export default {
 		// },
 		tipoPersona(){
 			this.model.firstname = null
-			this.model.lastname = null
+			this.model.lastname = ""
 			this.model.rut = null
 			if (this.datosQuery.status) {
 				this.model.firstname = this.datosQuery.Nombre_cliente
@@ -555,6 +555,7 @@ export default {
         font-weight: 800;
 		margin-bottom: 15px;
 		min-width: max-content;
+		cursor: pointer;
     }
 
 	#payment .bCancelar {
@@ -568,6 +569,7 @@ export default {
         color: #fff;
         font-weight: 800;
 		margin-bottom: 15px;
+		cursor: pointer;
     }
 
 	ul {

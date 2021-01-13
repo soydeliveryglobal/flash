@@ -1,6 +1,6 @@
 <template>
   <article id="origen">
-    <MapaGoogle title="Destino" :coods="model" @latLng="latLng" @streetNumber="setStreetNumber" :showError="msjErrorDireccion.length>0" :errorMsg="msjErrorDireccion[0]" :showErrorConfirm="msjErrorConfirm.length>0" :errorMsgConfirm="msjErrorConfirm[0]" :numberStreet="model.streetNumberConfirmation?model.streetNumberConfirmation:''"/>
+    <MapaGoogle title="Destino" title2="Complemento" :coods="model" @latLng="latLng" @streetNumber="setStreetNumber" :showError="msjErrorDireccion.length>0" :errorMsg="msjErrorDireccion[0]" :showErrorConfirm="msjErrorConfirm.length>0" :errorMsgConfirm="msjErrorConfirm[0]" :numberStreet="model.streetNumberConfirmation?model.streetNumberConfirmation:''"/>
   </article>
 </template>
 
@@ -45,7 +45,7 @@ export default {
 			return errors
     },
     valid(){
-			return this.model.lat!=null&&this.model.lng!=null && this.model.streetNumberConfirmation!=null &&this.model.streetNumberConfirmation!=''
+			return this.model.lat!=null&&this.model.lng!=null/*  && this.model.streetNumberConfirmation!=null &&this.model.streetNumberConfirmation!='' */
 		}
   },
   watch:{

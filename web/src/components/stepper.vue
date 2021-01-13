@@ -136,6 +136,11 @@ export default {
         left: 20%; */
         display: none;
      }
+      
+    #stepper{
+        height: 90%;
+      }
+
     #stepper section .title h1 {
         color: #2c3e50;
     }

@@ -11,8 +11,8 @@
 			<!-- <h1 class="titleM">{{active.title}}</h1> -->
 			<router-view/>
 			<section class="grpNav" >
-				<button class="atras" @click="back" v-if="active.id>1"></button>
-				<button class="ir" @click="ir" v-if="active.id<4"></button>
+				<button class="atras " @click="back" v-if="active.id>1"><img src="@/assets/arrow_white.png" alt="arrow"> Volver </button>
+				<button class="ir " @click="ir" v-if="active.id<4">Siguiente <img src="@/assets/arrow_white.png" alt="arrow">  </button>
 			</section>
 		</section>
 		<modal-error v-if="msjError" @cerrar="msjError=false" id="msjError">
@@ -124,7 +124,7 @@ src: url("./assets/Fuente/SimplySans-Bold.ttf") format("truetype");
 }
 
 #app {
-font-family: "Karla", Helvetica, Arial;;
+font-family: "Karla", Helvetica, Arial;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 text-align: center;
@@ -191,30 +191,37 @@ background-repeat: no-repeat;
 .grpNav{
 width: 100%;
 height: 120px;
-padding: 10px 30px;
+padding: 10px 20px;
 display: flex;
 justify-content: flex-end;
 }
-.grpNav button{
+.grpNav button {
 background-color: transparent;
-border:none;
-width: 40px;
-height: 40px;
+display: flex;
+align-items: center;
+justify-content:center;
+width: 100px;
 padding: 10px;
-margin: 10px;
+margin: 10px 0 10px 10px;
+height: 40px;
+border: 2px solid #ff7701;
+border-radius: 100px;
 cursor: pointer;
+font-family: "Karla", Helvetica, Arial;
+font-weight: bold;
+background-color: #ff7701;
+color: #FFF;
 }
-.grpNav .atras{
-	background-image: url('assets/left.png');
-background-repeat: no-repeat;
-background-size: cover;
-
+.grpNav button img{
+	width: 12px;
+	height: 12px;
 }
-.grpNav .ir{
-background-image: url('assets/rigth.png');
-background-repeat: no-repeat;
-background-size: cover;
-
+.grpNav .atras img{
+	transform: rotateY(180deg);
+	margin-right: 5px;
+}
+.grpNav .ir img{
+	margin-left: 5px;
 }
 .router article {
 width: 100%;
@@ -274,7 +281,7 @@ display: none;
 	width: 79%;
 }
 .router article {
-	height: calc(100% - 100px - 70px);
+	height: calc(100% - 210px - 70px);
 }
 .titleM{
 	display: block;
