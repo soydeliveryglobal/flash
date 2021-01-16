@@ -1,7 +1,7 @@
 {
   "name": "flash",
   "version": "1.2.0",
-  "env": "prod",
+  "env": "test",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

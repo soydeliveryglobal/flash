@@ -22,7 +22,8 @@ let initSteps = [
 			localidad: null,
 			street: null,
 			streetNumber: null,
-			streetNumberConfirmation: null
+			streetNumberConfirmation: null,
+			observacionOrigen:null
 		}, 
 		dataValid:{
 			coords:{
@@ -34,7 +35,10 @@ let initSteps = [
 			streetNumberConfirmation: {
 				touch: false,
 				min:1
-			}
+			},
+			observacionOrigen: {
+				touch: false,
+			},
 
 		}, valid:false},
 	{id:2,title:'Lugar de envío',subtitle:'Introduzca el lugar donde se ENVIARÁ la mercancía.<br>Presione la flecha para continuar',name:'2', view:'destino', active:false, 
@@ -46,7 +50,8 @@ let initSteps = [
 			localidad: null,
 			street: null,
 			streetNumber: null,
-			streetNumberConfirmation: null
+			streetNumberConfirmation: null,
+			observacionDestino:null
 		}, 
 		dataValid:{
 			coords:{
@@ -58,6 +63,9 @@ let initSteps = [
 			streetNumberConfirmation: {
 				touch: false,
 				min:1
+			},
+			observacionDestino: {
+				touch: false,
 			}
 		}, valid:false},
 	{
@@ -171,6 +179,7 @@ actions: {
 	async avanzar ({ commit, state, dispatch }, view) {
 		// if(state.datosQuery.status){
 			const steps = [...state.steps]
+			console.log('steps-1-', steps)
 			if(view==1){
 			let auxSteps = steps.filter(x=>x.valid&&(x.id==1));
 
@@ -259,7 +268,6 @@ actions: {
 			else
 			if(view==2){
 				let auxSteps = steps.filter(x=>x.valid&&(x.id==1||x.id==2));
-		
 				if(auxSteps.length==2){
 					steps.find(x=>x.active).active=false
 					steps[view-1].active=true
@@ -271,7 +279,6 @@ actions: {
 			else
 			if(view==3){
 				let auxSteps = steps.filter(x=>x.valid&&(x.id==1||x.id==2||x.id==3));
-		
 				if(auxSteps.length==3){
 					steps.find(x=>x.active).active=false
 					steps[view-1].active=true
@@ -285,6 +292,7 @@ actions: {
 			}  
 			else
 			if(view==4){
+				
 				let auxSteps = steps.filter(x=>x.valid&&(x.id==1||x.id==2||x.id==3||x.id==4));
 		
 				if(auxSteps.length==4){
@@ -474,6 +482,8 @@ actions: {
 	
 		step.valid=true
 		step.data={...payload.data}
+
+		console.log('payload',payload)
 		
 		commit('setSteps', { steps: [...steps] })
 		
@@ -609,14 +619,14 @@ actions: {
 			"Numero_origen": step1.streetNumber,
 			"Apto_origen": "",
 			"Esquina_origen": "",
-			"Observacion_origen": step3.observacionOrigen,
+			"Observacion_origen": step1.observacionOrigen, //antes en step3
 			"Location_origen": `${step1.lat}, ${step1.lng}`,
 			"Ciudad_destino": step2.localidad,
 			"Calle_destino": step2.street,
 			"Numero_destino": step2.streetNumber,
 			"Apto_destino": "",
 			"Esquina_destino": "",
-			"Observacion_destino": step3.observacionDestino,
+			"Observacion_destino": step2.observacionDestino, //antes en step3
 			"Location_destino": `${step2.lat}, ${step2.lng}`,
 			"Fecha_entrega": step3.serviceDate,
 			"Franja_horaria": step3.schedule,

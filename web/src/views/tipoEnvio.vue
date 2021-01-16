@@ -40,13 +40,13 @@
 		<section>
 			<label>
 				<span>Detalle Lugar de Origen</span>
-				<strong>{{direccionOrigen.street}}, {{direccionOrigen.streetNumber}}</strong>
+				<strong>{{direccionOrigen.street}}, {{direccionOrigen.streetNumber}},{{direccionOrigen.observacionOrigen}}</strong>
 				<!-- <textarea id="observacionOrigen" rows="4"  v-model="model.observacionOrigen" placeholder="Nro.Puerta, Edificio, Apto, referencia, etc."></textarea> -->
 				<!-- <small v-if="msjErrorOrigen.length>0">{{msjErrorOrigen[0]}}</small> -->
 			</label>
 			<label >
 				<span>Detalle Lugar de Destino</span>
-				<strong >{{direccionDestino.street}}, {{direccionDestino.streetNumber}}</strong>
+				<strong >{{direccionDestino.street}}, {{direccionDestino.streetNumber}},{{direccionOrigen.observacionDestino}}</strong>
 				<!-- <textarea id="observacionDestino" rows="4"  v-model="model.observacionDestino" placeholder="Nro.Puerta, Edificio, Apto, referencia, etc."></textarea> -->
 			<!-- 	<small v-if="msjErrorDestino.length>0">{{msjErrorDestino[0]}}</small> -->
 			</label>

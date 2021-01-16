@@ -64,6 +64,7 @@
 								<label for="cardNumber">Número de tarjeta:</label>
 								<div class="tarjeta">
 									<input v-model="form.cardNumber" @keyup="guessingPaymentMethod()" @blur="guessingPaymentMethod()" type="text" placeholder="0000 0000 0000 0000" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off  :disabled="pagando ? 'disabled': null"/>
+									{{form.cardNumber}}
 									<img v-if="thumbnai" :src="thumbnai"/>
 								</div>
 							</li>
@@ -91,9 +92,9 @@
 								<label for="docNumber">Número de documento:</label>
 								<input v-model="docNumber" @blur="formatoDoc" type="text" placeholder="Nº de documento"  :disabled="pagando ? 'disabled': null"/>
 							</li>
-							
-							<li>
-								<button  @click="pagar()" class="bPago">Procesar pago</button>
+							<li >
+								<div></div>
+								<button  @click="pagar()" class="bPago" style="width: 100%;" >Procesar pago</button>
 							</li>
 						</ul>
 						<!-- <span v-if="error" class="error">{{error}}</span> -->
@@ -135,7 +136,7 @@
 						<li class="fondo"></li>
 						<li>
 							<button @click="cerrarModal" class="bCancelar">Cancelar</button>
-							<button @click="pagar()" class="bPago">Procesar</button>
+							<button @click="pagar()" class="bPago">Finalizar</button>
 						</li>								
 					</ul>
 				</div>
@@ -457,7 +458,6 @@ export default {
 </script>
 
 <style>
-
 	#payment section label{
 		width: 33%;
 		max-width: 600px;
@@ -554,7 +554,6 @@ export default {
         color: #fff;
         font-weight: 800;
 		margin-bottom: 15px;
-		min-width: max-content;
 		cursor: pointer;
     }
 
@@ -641,7 +640,7 @@ export default {
         border: none;
         padding-right: 0;
     }
-	ul .bPago, .bCancelar{
+	ul .bCancelar{
 		max-width: max-content !important;
 		justify-self: center;
 	}

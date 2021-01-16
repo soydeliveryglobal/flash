@@ -1,6 +1,6 @@
 <template>
   <article id="origen">
-    <MapaGoogle title="Destino" title2="Complemento" :coods="model" @latLng="latLng" @streetNumber="setStreetNumber" :showError="msjErrorDireccion.length>0" :errorMsg="msjErrorDireccion[0]" :showErrorConfirm="msjErrorConfirm.length>0" :errorMsgConfirm="msjErrorConfirm[0]" :numberStreet="model.streetNumberConfirmation?model.streetNumberConfirmation:''"/>
+    <MapaGoogle title="Destino" title2="Complemento" :coods="model" @latLng="latLng"  @observation="setObservation"  @streetNumber="setStreetNumber" :showError="msjErrorDireccion.length>0" :errorMsg="msjErrorDireccion[0]" :showErrorConfirm="msjErrorConfirm.length>0" :errorMsgConfirm="msjErrorConfirm[0]" :numberStreet="model.streetNumberConfirmation?model.streetNumberConfirmation:''"/>
   </article>
 </template>
 
@@ -22,7 +22,8 @@ export default {
       localidad: null,
       street: null,
       streetNumber: null,
-      streetNumberConfirmation: ''
+      streetNumberConfirmation: '',
+      observacionDestino: ""
 		},
 		dataValid:{}
   }),
@@ -46,7 +47,7 @@ export default {
     },
     valid(){
 			return this.model.lat!=null&&this.model.lng!=null/*  && this.model.streetNumberConfirmation!=null &&this.model.streetNumberConfirmation!='' */
-		}
+    }
   },
   watch:{
     'model.lat'(){
@@ -55,8 +56,10 @@ export default {
     'model.lng'(){
         this.validModel()
     },
+    'model.observacionDestino'(){
+        this.validModel()
+    },
     'model.streetNumberConfirmation'(){
-      console.log(this.model.streetNumberConfirmation)
         this.validModel()
     },
 		async valid(){
@@ -72,7 +75,7 @@ export default {
 	},
   methods:{
    latLng(position){
-      this.model={...position,streetNumberConfirmation:this.model.streetNumberConfirmation}
+      this.model={...position,streetNumberConfirmation:this.model.streetNumberConfirmation,observacionDestino:this.model.observacionDestino}
     },
     async validModel(){
       
@@ -81,18 +84,25 @@ export default {
             id: 2,
             data: {...this.model}
         }
+        console.log('diske model',data)
         await this.$store.dispatch('validateData', data)
       }
     },
     setStreetNumber(streetNumber){
       this.model.streetNumberConfirmation = streetNumber
+    },
+    setObservation(observation){
+      this.model.observacionDestino = observation
     }
   },
   beforeMount(){
     this.step = {...this.$store.getters.getStep(2)}
     this.dataValid = {...this.step.dataValid}
     this.model = {...this.step.data}
+    async ()=>{
 
+      console.log(await this.$store.step)
+    }
   },
   created(){
     window.event.$on('touchData', function(){
@@ -105,7 +115,7 @@ export default {
     }.bind(this))
         //Leer QueryString
 
-  },
+  }
 
 }
 </script>

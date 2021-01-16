@@ -1,7 +1,9 @@
 <template>
   <article id="retiro">
       <!-- {{valid}} -->
-    <MapaGoogle title="Origen" title2="Complemento" :coods="model" @latLng="latLng" @streetNumber="setStreetNumber" :showError="msjErrorDireccion.length>0" :errorMsg="msjErrorDireccion[0]" :showErrorConfirm="msjErrorConfirm.length>0" :errorMsgConfirm="msjErrorConfirm[0]" :numberStreet="model.streetNumberConfirmation?model.streetNumberConfirmation:''"/>
+	<!-- {{ model.observacionOrigen }} -->
+<!-- 	<checkMark> </checkMark>	 -->
+    <MapaGoogle title="Origen" title2="Complemento" :coods="model" @latLng="latLng" @observation="setObservation" @streetNumber="setStreetNumber" :showError="msjErrorDireccion.length>0" :errorMsg="msjErrorDireccion[0]" :showErrorConfirm="msjErrorConfirm.length>0" :errorMsgConfirm="msjErrorConfirm[0]" :numberStreet="model.streetNumberConfirmation?model.streetNumberConfirmation:''"/>
   </article>
 </template>
 
@@ -11,7 +13,8 @@ import {mapState} from 'vuex'
 export default {
   name: 'lugarRetiro',
   components: {
-    MapaGoogle: () => import('@/components/mapa.vue')
+	MapaGoogle: () => import('@/components/mapa.vue'),
+	/* checkMark:()=> import('@/components/loaders/animatedCheckMark.vue') */
   },
 	data: () => ({
 		step:null,
@@ -23,7 +26,8 @@ export default {
 			localidad: null,
 			street: null,
 			streetNumber: null,
-			streetNumberConfirmation: ''
+			streetNumberConfirmation: '',
+			observacionOrigen: "",
 		},
 		dataValid:{}
 	}),
@@ -45,7 +49,7 @@ export default {
 			return errors
     },
     valid(){
-			return this.model.lat!=null&&this.model.lng!=null/*  && this.model.streetNumberConfirmation!=null  && this.model.streetNumberConfirmation!='' */
+			return this.model.lat!=null&&this.model.lng!=null && this.model.streetNumberConfirmation!=null  && this.model.streetNumberConfirmation!='' 
 		}
   },
   watch:{
@@ -55,15 +59,18 @@ export default {
     },
     'model.lng'(){
         this.validModel()
+	},
+	'model.observacionOrigen'(){
+        this.validModel()
     },
     'model.streetNumberConfirmation'(){
-      /*   this.validModel() */
+        this.validModel()
     },
 
 	},
   methods:{
     latLng(position){
-      this.model={...position,streetNumberConfirmation:this.model.streetNumberConfirmation}
+      this.model={...position,streetNumberConfirmation:this.model.streetNumberConfirmation,observacionOrigen:this.model.observacionOrigen}
     },
     async validModel(){
         // window.event.$emit('showSpinner', true)
@@ -72,7 +79,8 @@ export default {
           const data = {
             id: 1,
             data: {...this.model}
-        }
+		}
+		console.log('diske model',data)
 		await this.$store.dispatch('validateData', data)
         // window.event.$emit('showSpinner', false)
 		
@@ -80,19 +88,23 @@ export default {
     },
     setStreetNumber(streetNumber){
       this.model.streetNumberConfirmation = streetNumber
+	},
+	setObservation(observation){
+      this.model.observacionOrigen = observation
     }
   },
   beforeMount(){
     this.step = {...this.$store.getters.getStep(1)}
     this.dataValid = {...this.step.dataValid}
     this.model = {...this.step.data}
-
+	console.log('mount: ',this.$store.getters.getStep(1))
   },
   created(){
     window.event.$on('touchData', function(){
 			if(!this.valid){
-        this.dataValid.coords.touch = true
-        this.dataValid.streetNumberConfirmation.touch = true
+				this.dataValid.coords.touch = true
+				this.dataValid.streetNumberConfirmation.touch = true
+				this.dataValid.observacionOrigen.touch = true
 			}
 			
 		}.bind(this))

@@ -4,6 +4,7 @@
 			<stepper :steps="steps"  />
 		</section>
 		<section class="router" :style="approved?'width:100%;':''">
+			
 			<figure class="logo">
 				<img src="./assets/logo.jpeg" alt="">
 			</figure>
@@ -187,6 +188,7 @@ background-image: url('./assets/fondo.png');
 background-position: -15vw bottom;
 background-size: 90%;
 background-repeat: no-repeat;
+position: relative;
 }
 .grpNav{
 width: 100%;

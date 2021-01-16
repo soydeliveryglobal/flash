@@ -9,7 +9,7 @@
             </label>
             <label class="streetNUmber">
                 <span>{{title2}}</span>
-                <input type="text" placeholder="Edificio, Apto, referencia, etc." v-model="complement" @blur="emitStreet">   
+                <input type="text" placeholder="Edificio, Apto, referencia, etc." v-model="observation" @blur="emitObservation">   
                 <small v-if="showErrorConfirm">{{errorMsgConfirm}}</small>
             </label>
         </div>
@@ -99,7 +99,7 @@ export default {
             lng: null
         },
         address: null,
-        complement: null,
+        observation: null,
         zoom: 12
     }),
     computed:{
@@ -188,10 +188,13 @@ export default {
         },
         emitStreet(){
             this.$emit('streetNumber', this.streetNumber)
+        },
+      emitObservation(){
+            this.$emit('observation', this.observation)
         }
     },
     mounted(){
-		/* this.streetNumber = 'n/a' */
+		this.streetNumber = 'n/a'
 		this.emitStreet()
         if(this.coods && this.coods.lat && this.coods.lng){
                 let place = {
@@ -218,8 +221,8 @@ export default {
                 this.setPlace(place)
                 //document.querySelector('.pac-target-input').value = this.coods.direccion
         }
-        /* console.log(this.numberStreet) */
-        /* this.numberStreet!=''?this.streetNumber=this.numberStreet:this.streetNumber='' */
+        console.log(this.numberStreet)
+        this.numberStreet!=''?this.streetNumber=this.numberStreet:this.streetNumber=''
     }
 
 }
