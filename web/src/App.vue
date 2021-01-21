@@ -81,7 +81,7 @@ export default {
 			document.getElementsByTagName ('html') [0] .remove ();
 		},
 		anotherFlash(){
-			window.location = "https://www.flashsoydelivery.com.uy/#/"
+			window.location.href = "https://www.flashsoydelivery.com.uy/#/"
 		},
 		ir(){
 		window.event.$emit('touchData')
