@@ -168,8 +168,8 @@ mutations: {
 	setDatosQuery(state, datos){
 		state.datosQuery = {...datos}
 	},
-	setApproved(state){
-		state.approved = true
+	setApproved(state,payload){
+		state.approved = payload
 	},
 	cleanApproved(state){
 		state.approved = false
@@ -656,10 +656,13 @@ actions: {
 		//este codigo de error es enrealidad el modal de pedido ingresado con exito
 		if(parseInt(response.Error_code)==0){
 			//hacer que rutee al aprovved 
-			router.push({name: 'paymentApproved'})
-			if(tipo!=1)
-				window.event.$emit('showError', response.Error_desc)
-			commit('setApproved');
+			/* if(tipo!=1)
+				window.event.$emit('showError', response.Error_desc) */
+			if(tipo!=1){
+				commit('setApproved',true);
+				router.push({name: 'paymentApproved'})
+				return true
+			}
 			return true
 		}
 		else{

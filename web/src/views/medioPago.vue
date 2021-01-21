@@ -154,7 +154,7 @@
 </template>
 
 <script>
-/* import s_pagar from './p_pago/s_pagar' */
+import s_pagar from './p_pago/s_pagar'
 // import a_test from './p_pago/a_test'
 // *********************  STORE-VUEX ****************************** //
 import {mapState} from 'vuex'
@@ -382,13 +382,12 @@ export default {
 			if(this.terminos){
 				this.pagando = true
 	
-				/* s_pagar (this) */
-				this.$router.push({name: 'paymentApproved'})
+				s_pagar (this)
 	
 				this.yaProceso = true
 				this.cerrarModal()
 	
-			/* 	this.$store.dispatch('ir', 0) */
+				this.$store.dispatch('ir', 0)
 			}
 
 			// const data = {

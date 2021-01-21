@@ -54,7 +54,7 @@ export default async (componente) => {
         //         }
         //     }
         let res = await componente.$store.dispatch('iniciarPago', datosPago)
-        console.log(res)
+        console.log('RESPUESTA PAGO',res)
         if(res){
             componente.pago = false
             componente.form = {
