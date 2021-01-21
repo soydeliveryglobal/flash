@@ -53,7 +53,7 @@ export default {
 
 <style>
 .checkmark {
-  width: 50px;
+  width: 100px;
   margin: 0 auto;
   padding-top: 40px;
 }
@@ -70,17 +70,6 @@ export default {
   -webkit-animation: spin 2s;
   transform-origin: 50% 50%;
   -webkit-transform-origin: 50% 50%;
-}
-
-p {
-  font-family: sans-serif;
-  color: pink;
-  font-size: 30px;
-  font-weight: bold;
-  margin: 20px auto;
-  text-align: center;
-  animation: text 0.5s linear 0.4s;
-  -webkit-animation: text 0.4s linear 0.3s;
 }
 
 @-webkit-keyframes dash {

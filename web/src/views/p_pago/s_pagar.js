@@ -14,6 +14,7 @@ export default async (componente) => {
     })
 
     // Obtengo Token, realizo pago, y muestro mensaje
+    console.log('datos query: ',componente?.datosQuery?.status)
     try {
         let datosPago = {}
         if(!componente.datosQuery.status){

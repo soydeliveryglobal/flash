@@ -46,7 +46,7 @@
 			</label>
 			<label >
 				<span>Detalle Lugar de Destino</span>
-				<strong >{{direccionDestino.street}}, {{direccionDestino.streetNumber}},{{direccionOrigen.observacionDestino}}</strong>
+				<strong >{{direccionDestino.street}}, {{direccionDestino.streetNumber}},{{direccionDestino.observacionDestino}}</strong>
 				<!-- <textarea id="observacionDestino" rows="4"  v-model="model.observacionDestino" placeholder="Nro.Puerta, Edificio, Apto, referencia, etc."></textarea> -->
 			<!-- 	<small v-if="msjErrorDestino.length>0">{{msjErrorDestino[0]}}</small> -->
 			</label>
@@ -193,7 +193,7 @@ export default {
 		}
 	},
 	mounted(){
-		this.model.deliveryType = this.model.deliveryType==1 ? this.Express ? 1 :1 :2 /* this.model.deliveryType==2?this.Express?1:2:2 */
+		this.model.deliveryType = this.model.deliveryType==1 ? this.Express ? 1 :2 :2 /* this.model.deliveryType==2?this.Express?1:2:2 */
 
 	},
 
@@ -203,7 +203,7 @@ export default {
 		this.model = {...this.step.data}
 		this.direccionOrigen = this.$store.state.steps.find(x=> x.id==1).data
 		this.direccionDestino = this.$store.state.steps.find(x=> x.id==2).data
-		
+		console.log('data que llega:',this.$store.state.steps.find(x=> x.id==2).data)
 		
 	},
 	created(){

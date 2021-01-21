@@ -67,7 +67,7 @@ const routes = [
   },
   {
     path: '/paymentApproved',
-    name: 'Aprobación de pago',
+    name: 'paymentApproved',
     component: () => import('../views/paymentApproved'),
     beforeEnter: (to,from, next) => {
       if(store.state.approved){

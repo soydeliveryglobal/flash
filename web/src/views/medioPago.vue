@@ -47,14 +47,14 @@
 		<button @click="modalPago" class="bPago">{{datosQuery.status? 'CONFIRMAR': 'PAGAR'}}</button>
 		<modal v-if="pago" @cerrar="cerrarModal" >
 			<div slot="contenido" id="contenido">
-				<div v-show="!terminos">
+				<!-- <div v-show="!terminos">
 					<embed src="terminos.pdf" type="application/pdf" />
 					<label>
 						<input type="checkbox" name="terminos" id="terminos" v-model="terminos">
-						<span>He leído y acepto los términos y condiciones</span>
+						<span>Acepto los términos y condiciones</span>
 					</label>
-				</div>
-				<div v-show="terminos && !datosQuery.status">
+				</div> -->
+				<div v-show=" !datosQuery.status">
 						<ul>
 							<li>
 								<label for="email">Email</label>
@@ -64,7 +64,7 @@
 								<label for="cardNumber">Número de tarjeta:</label>
 								<div class="tarjeta">
 									<input v-model="form.cardNumber" @keyup="guessingPaymentMethod()" @blur="guessingPaymentMethod()" type="text" placeholder="0000 0000 0000 0000" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off  :disabled="pagando ? 'disabled': null"/>
-									{{form.cardNumber}}
+								
 									<img v-if="thumbnai" :src="thumbnai"/>
 								</div>
 							</li>
@@ -92,9 +92,17 @@
 								<label for="docNumber">Número de documento:</label>
 								<input v-model="docNumber" @blur="formatoDoc" type="text" placeholder="Nº de documento"  :disabled="pagando ? 'disabled': null"/>
 							</li>
+							<li>
+								<div></div>
+								<div class="terminosContainer">
+									<input type="checkbox" name="terminos" id="terminos" v-model="terminos">
+									<a href="terminos.pdf" target="_blank">Acepto los términos y condiciones</a>
+									<small v-if="msjErrorTerminos.length>0">{{msjErrorCorreo[0]}}</small>
+								</div>
+							</li>
 							<li >
 								<div></div>
-								<button  @click="pagar()" class="bPago" style="width: 100%;" >Procesar pago</button>
+								<button  @click="pagar()" class="bPago" style="width: 100%;" >Finalizar</button>
 							</li>
 						</ul>
 						<!-- <span v-if="error" class="error">{{error}}</span> -->
@@ -105,11 +113,11 @@
 					<ul>
 						<li class="fondo">
 							<p><strong>ORIGEN: </strong></p>
-							<p>{{steps.find(x=> x.id==1).data.address}} <span>DETALLE: {{steps.find(x=> x.id==3).data.observacionOrigen}}</span></p>
+							<p>{{steps.find(x=> x.id==1).data.address}} <span>DETALLE: {{steps.find(x=> x.id==1).data.observacionOrigen}}</span></p>
 						</li>
 						<li>
 							<p><strong>DESTINO:</strong></p>
-							<p>{{steps.find(x=> x.id==2).data.address}} <span>DETALLE: {{steps.find(x=> x.id==3).data.observacionDestino}}</span></p>
+							<p>{{steps.find(x=> x.id==2).data.address}} <span>DETALLE: {{steps.find(x=> x.id==2).data.observacionDestino}}</span></p>
 						</li>
 						<li class="fondo">
 							<p><strong>TIPO:</strong></p>
@@ -146,7 +154,7 @@
 </template>
 
 <script>
-import s_pagar from './p_pago/s_pagar'
+/* import s_pagar from './p_pago/s_pagar' */
 // import a_test from './p_pago/a_test'
 // *********************  STORE-VUEX ****************************** //
 import {mapState} from 'vuex'
@@ -192,7 +200,6 @@ export default {
 			steps: state => state.steps,
 			vehiculos: state => state.vehiculos,
 			franjas: state => state.franjas
-
 		}),
 	
 		msjErrorNombre(){
@@ -226,6 +233,13 @@ export default {
       const errors = []
 			if (!this.dataValid.rut.touch) return errors
 			if(this.model.rut==null || this.model.rut.length < this.dataValid.rut.min) errors.push('Ingrese un rut')
+
+			return errors
+	},
+	msjErrorTerminos(){
+      const errors = []
+			if (this.terminos) return errors
+			if(!this.terminos) errors.push('Acepte los terminos y condiciones')
 
 			return errors
 	},
@@ -365,14 +379,17 @@ export default {
         },
 
         pagar () {
-			this.pagando = true
-
-			s_pagar (this)
-
-			this.yaProceso = true
-			this.cerrarModal()
-
-			this.$store.dispatch('ir', 0)
+			if(this.terminos){
+				this.pagando = true
+	
+				/* s_pagar (this) */
+				this.$router.push({name: 'paymentApproved'})
+	
+				this.yaProceso = true
+				this.cerrarModal()
+	
+			/* 	this.$store.dispatch('ir', 0) */
+			}
 
 			// const data = {
 			// 		id: 4,
@@ -629,9 +646,6 @@ export default {
     }
 
     .fecha {
-        background-color: #fff;
-        border-radius: .5em;
-        border: 3px solid #b5a897;
         margin: 0 auto 0 0;
     }
 
@@ -654,6 +668,15 @@ export default {
 		background-color: #dfdddd;
 	}
 
+	.terminosContainer{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.terminosContainer a{
+		color:#337ab7;
+		text-decoration: none;
+	}
     @media (max-width: 640px) {
         li {
             grid-template-columns: auto;

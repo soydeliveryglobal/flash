@@ -3,7 +3,7 @@
       <!-- {{valid}} -->
 	<!-- {{ model.observacionOrigen }} -->
 <!-- 	<checkMark> </checkMark>	 -->
-    <MapaGoogle title="Origen" title2="Complemento" :coods="model" @latLng="latLng" @observation="setObservation" @streetNumber="setStreetNumber" :showError="msjErrorDireccion.length>0" :errorMsg="msjErrorDireccion[0]" :showErrorConfirm="msjErrorConfirm.length>0" :errorMsgConfirm="msjErrorConfirm[0]" :numberStreet="model.streetNumberConfirmation?model.streetNumberConfirmation:''"/>
+    <MapaGoogle title="Origen" title2="Observación" :coods="model" @latLng="latLng" @observation="setObservation" @streetNumber="setStreetNumber" :showError="msjErrorDireccion.length>0" :errorMsg="msjErrorDireccion[0]" :showErrorConfirm="msjErrorConfirm.length>0" :errorMsgConfirm="msjErrorConfirm[0]" :numberStreet="model.streetNumberConfirmation?model.streetNumberConfirmation:''"/>
   </article>
 </template>
 

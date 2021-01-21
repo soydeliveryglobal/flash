@@ -13,7 +13,7 @@ const NEGOCIOCLAVE = 1990;
 // const APIKEY = 'ZBVpOqHHTkQSVSdeRIKXZj6W2glkEgQo';
 
 let initSteps = [
-	{id:1,title:'Lugar de retiro',subtitle:'Introduzca el lugar donde se RETIRARÁ la mercancía.<br>Presione la flecha para continuar',name:'1', view:'origen', active:true, 
+	{id:1,title:'Lugar de retiro',subtitle:'Introduzca el lugar donde se RETIRARÁ la mercancía.<br>Presione la flecha para continuar',name:'1', view:'origen', active:true,ilustracion:'Ilustracion_chica_con_caja', 
 		data:{
 			lat: null,
 			lng:null,
@@ -41,7 +41,7 @@ let initSteps = [
 			},
 
 		}, valid:false},
-	{id:2,title:'Lugar de envío',subtitle:'Introduzca el lugar donde se ENVIARÁ la mercancía.<br>Presione la flecha para continuar',name:'2', view:'destino', active:false, 
+	{id:2,title:'Lugar de envío',subtitle:'Introduzca el lugar donde se ENVIARÁ la mercancía.<br>Presione la flecha para continuar',name:'2', view:'destino', active:false,ilustracion:'Ilustración_chico_con_celular',
 		data:{
 			lat: null,
 			lng:null,
@@ -69,7 +69,7 @@ let initSteps = [
 			}
 		}, valid:false},
 	{
-		id:3,title:'Tipo de envío',subtitle:'Seleccione el VEHÍCULO, la FECHA y la FRANJA HORARIA que desee. <br>Presione la flecha para continuar',name:'3', view:'Tipo de envío', active:false, valid: false,
+		id:3,title:'Tipo de envío',subtitle:'Seleccione el VEHÍCULO, la FECHA y la FRANJA HORARIA que desee. <br>Presione la flecha para continuar',name:'3', view:'Tipo de envío', active:false, valid: false,ilustracion:'Ilustración_siluetas-blancas_camión-y-moto',
 		data:{deliveryType:1,vehicleType:null,serviceDate:moment().format('YYYY-MM-DD'), schedule:null, observacionOrigen:null,observacionDestino:null }, 
 		dataValid:{
 			deliveryType: {
@@ -102,7 +102,7 @@ let initSteps = [
 		}
 	},
 	{
-		id:4,title:'Pago',subtitle:'Introduzca los datos para el pago del servicio',name:'4', view:'Pago', active:false, 
+		id:4,title:'Pago',subtitle:'Introduzca los datos para el pago del servicio',name:'4', view:'Pago', active:false, ilustracion:'Ilustración_siluetas-blancas_tarjetas',
 		data:{
 			firstname: null,
 			lastname: "",
@@ -539,19 +539,19 @@ actions: {
 
 				let resMP = await dispatch('iniciarMercadoPago', payload.pago)
 				console.log(resMP);
-				if(resMP.response.status!='rejected'){
+				if(resMP?.response?.status!='rejected'){
 					
 					let res = await dispatch('altaPago',2)
 
 
-					if(res.ok){
+					if(res?.ok){
 						//router.push({name: 'Aprobación de pago'})
-						return res.ok
+						return res?.ok
 					}
 	
 				}
 				else {
-					switch(resMP.response.status_detail){
+					switch(resMP?.response?.status_detail){
 						case 'cc_rejected_insufficient_amount':{
 							window.event.$emit('showError', 'Su pago ha sido rechazado: Monto insuficiente.')
 							break
@@ -653,13 +653,17 @@ actions: {
 
 		let response = await apiAltaPago(dataAlta)
 		console.log(response)
+		//este codigo de error es enrealidad el modal de pedido ingresado con exito
 		if(parseInt(response.Error_code)==0){
+			//hacer que rutee al aprovved 
+			router.push({name: 'paymentApproved'})
 			if(tipo!=1)
 				window.event.$emit('showError', response.Error_desc)
 			commit('setApproved');
 			return true
 		}
 		else{
+			//dejar el error 
 			window.event.$emit('showError', response.Error_desc)
 			return false
 		}

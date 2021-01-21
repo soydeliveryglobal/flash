@@ -6,7 +6,7 @@ const dev = {
     apiUrl: "https://soydelivery.com.uy​/rest/",
     mercadoPagoUrl: 'https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js',
     marcadoPagoKey: 'TEST-002c9bbc-80af-4dea-91b0-2ab582a97c34',    
-    apiPago: 'https://localhost:8000',
+    apiPago: 'http://localhost:8000',
     routerMode: false,
     publicPath: "/",
     backend: false

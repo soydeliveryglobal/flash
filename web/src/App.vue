@@ -8,12 +8,15 @@
 			<figure class="logo">
 				<img src="./assets/logo.jpeg" alt="">
 			</figure>
-			<h1 class="titulo">{{texto1(active.title)}} <span class="cuadro">{{text2}}</span> </h1>
+			<h1 v-if="!approved" class="titulo">{{texto1(active.title)}} <span class="cuadro">{{text2}}</span> </h1>
+			<h1  v-if="approved" class="titulo">Pago Realizado</h1>
 			<!-- <h1 class="titleM">{{active.title}}</h1> -->
 			<router-view/>
-			<section class="grpNav" >
-				<button class="atras " @click="back" v-if="active.id>1"><img src="@/assets/arrow_white.png" alt="arrow"> Volver </button>
-				<button class="ir " @click="ir" v-if="active.id<4">Siguiente <img src="@/assets/arrow_white.png" alt="arrow">  </button>
+			<section :class="approved ? 'grpNavApproved' : 'grpNav'"  >
+				<button  class="atras " @click="back" v-if="active.id>1  && !approved"><img src="@/assets/arrow_white.png" alt="arrow"> Volver </button>
+				<button class="ir " @click="ir" v-if="active.id<4 && !approved">Siguiente <img src="@/assets/arrow_white.png" alt="arrow">  </button>
+				<button class="ir" @click="anotherFlash" v-if="approved">Cargar otro flash <img src="@/assets/arrow_white.png" alt="arrow"></button>
+				<button class="ir" @click="closeTab" v-if="approved">Salir <img src="@/assets/arrow_white.png" alt="arrow"></button>
 			</section>
 		</section>
 		<modal-error v-if="msjError" @cerrar="msjError=false" id="msjError">
@@ -46,7 +49,8 @@ export default {
 		//************* MAPEO DE STORE ************
 		...mapState({
 			steps: state => state.steps,
-			datosQuery: state => state.datosQuery
+			datosQuery: state => state.datosQuery,
+			approved:state => state.approved
 		}),
 	
 		active(){
@@ -73,6 +77,12 @@ export default {
 		// }
 	},
 	methods:{
+		closeTab(){
+			document.getElementsByTagName ('html') [0] .remove ();
+		},
+		anotherFlash(){
+			window.location = "https://www.flashsoydelivery.com.uy/#/"
+		},
 		ir(){
 		window.event.$emit('touchData')
 				this.$store.dispatch('avanzar', this.active.id)
@@ -172,10 +182,11 @@ color: #42b983;
 height: 100%;
 width: 30%;
 background-color: #ff7701;
-background-image: url('./assets/fondo_franja.png');
+/* background-image: url('./assets/fondo_franja.png'); */
 background-position: -55px bottom;
 background-size: 80%;
 background-repeat: no-repeat;
+position: relative;
 }
 
 .router{
@@ -184,20 +195,24 @@ height: 100%;
 display: flex;
 flex-flow: column nowrap;
 align-items: flex-end;
-background-image: url('./assets/fondo.png');
+/* background-image: url('./assets/fondo.png'); */
 background-position: -15vw bottom;
 background-size: 90%;
 background-repeat: no-repeat;
 position: relative;
 }
-.grpNav{
+.grpNav,.grpNavApproved{
 width: 100%;
 height: 120px;
 padding: 10px 20px;
 display: flex;
 justify-content: flex-end;
 }
-.grpNav button {
+.grpNavApproved{
+    flex-direction: column;
+    align-items: flex-end;
+}
+.grpNav button,.grpNavApproved button {
 background-color: transparent;
 display: flex;
 align-items: center;
@@ -214,7 +229,10 @@ font-weight: bold;
 background-color: #ff7701;
 color: #FFF;
 }
-.grpNav button img{
+.grpNavApproved button{
+	width:fit-content;
+}
+.grpNav button img,.grpNavApproved button img{
 	width: 12px;
 	height: 12px;
 }
@@ -222,7 +240,7 @@ color: #FFF;
 	transform: rotateY(180deg);
 	margin-right: 5px;
 }
-.grpNav .ir img{
+.grpNav .ir img,.grpNavApproved .ir img{
 	margin-left: 5px;
 }
 .router article {
@@ -287,6 +305,9 @@ display: none;
 }
 .titleM{
 	display: block;
+}
+.bgWhite{
+	background-color: #FFF;
 }
 }
 </style>

@@ -9,7 +9,7 @@
             </label>
             <label class="streetNUmber">
                 <span>{{title2}}</span>
-                <input type="text" placeholder="Edificio, Apto, referencia, etc." v-model="observation" @blur="emitObservation">   
+                <input type="text" placeholder="Edificio, Apto, Referencia, Manzana, etc." v-model="observation" @blur="emitObservation">   
                 <small v-if="showErrorConfirm">{{errorMsgConfirm}}</small>
             </label>
         </div>
