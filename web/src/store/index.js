@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import router from './../router'
 import moment from 'moment-timezone'
-import { apiNegocioFranjas, apiNegocioVehiculoTipo, apiToken, apiValidarExpress, apiObtenerTarifa, apiPagoMercadoPago, apiAltaPago } from './../api/router'
+import { apiNegocioFranjas, apiNegocioVehiculoTipo, apiToken, apiValidarExpress, apiObtenerTarifa, apiPagoMercadoPago, apiAltaPago,apiGetParam } from './../api/router'
 
 Vue.use(Vuex)
 
@@ -138,6 +138,7 @@ state: {
 		mercadopago: 'n',
 		status: false
 	},
+	negociosQueNoVenTarifas:[],
 	approved: false
 },
 mutations: {
@@ -173,6 +174,9 @@ mutations: {
 	},
 	cleanApproved(state){
 		state.approved = false
+	},
+	setNegociosQueNoVenTarifas(state,payload){
+		state.negociosQueNoVenTarifas = payload
 	}
 },
 actions: {
@@ -410,7 +414,14 @@ actions: {
 			return false
 		}
 	},
-
+	async getParamNegocioQueNoVenTarifa({commit}){
+		
+		let data = JSON.stringify({"ParametroNombre":"negociosquenoventarifa"})
+		let response = await apiGetParam(data)
+		let negocios = response.ParametroValor.split(",")
+		commit('setNegociosQueNoVenTarifas', negocios)
+		
+	},
 	async getValidExpress({commit,dispatch,state}){
 		
 		let data = {

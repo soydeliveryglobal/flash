@@ -26,7 +26,7 @@
 				<small v-if="msjErrorFecha.length>0">{{msjErrorFecha[0]}}</small>
 			</label>
 			<label  v-if="model.deliveryType==2">
-				<span title="Esta es la hora en la que pasaran a recojer su paquete y proceder a entregarlo.">Franja horaria</span>
+				<span title="Esta es la hora en la que pasarán a recoger su paquete y proceder a entregarlo.">Franja horaria</span>
 				<select v-if="franjas.length==0" >
 					<option value="-1" selected>No hay Horarios Disponibles para esta fecha</option>
 

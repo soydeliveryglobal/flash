@@ -66,3 +66,11 @@ export const apiAltaPago = (datos) => {
 	return apiHttp('POST',`/sdws_nuevopedidoflash`, datos)
 }
 
+/**
+ *  @description Servicio que determina si un negocio puede ver 
+ *  @author  Sebastian Labadie <sebastianlabadie.contact@gmail.com> 19/03/2021
+ *  @returns {object} respuesta
+ */
+ export const apiGetParam = (datos) => {
+	return apiHttp('POST',`/GetParam`, datos)
+}

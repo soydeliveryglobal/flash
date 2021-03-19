@@ -15,7 +15,7 @@
 			<section :class="approved ? 'grpNavApproved' : 'grpNav'"  >
 				<button  class="atras " @click="back" v-if="active.id>1  && !approved"><img src="@/assets/arrow_white.png" alt="arrow"> Volver </button>
 				<button class="ir " @click="ir" v-if="active.id<4 && !approved">Siguiente <img src="@/assets/arrow_white.png" alt="arrow">  </button>
-				<button class="ir" @click="anotherFlash" v-if="approved">Cargar otro flash <img src="@/assets/arrow_white.png" alt="arrow"></button>
+					<button class="ir" @click="anotherFlash" v-if="approved">Cargar otro flash <img src="@/assets/arrow_white.png" alt="arrow"></button>
 				<button class="ir" @click="closeTab" v-if="approved">Salir <img src="@/assets/arrow_white.png" alt="arrow"></button>
 			</section>
 		</section>
@@ -31,7 +31,7 @@
 </template>
 <script>
 // *********************  STORE-VUEX ****************************** //
-import {mapState} from 'vuex'
+import {mapState,mapActions} from 'vuex'
 export default {
 	components:{
 	'stepper': ()=>import('./components/stepper'),
@@ -46,7 +46,7 @@ export default {
 		showSpinner: false
 	}),
 	computed: {
-		//************* MAPEO DE STORE ************
+		...mapActions(["getParamNegocioQueNoVenTarifa"]),
 		...mapState({
 			steps: state => state.steps,
 			datosQuery: state => state.datosQuery,
@@ -77,11 +77,13 @@ export default {
 		// }
 	},
 	methods:{
-		closeTab(){
-			document.getElementsByTagName ('html') [0] .remove ();
-		},
 		anotherFlash(){
-			window.location.href = "https://www.flashsoydelivery.com.uy/#/"
+			this.$store.dispatch('setApproved',false)
+			location.reload()
+		},
+		closeTab(){
+			this.$store.dispatch('setApproved',false)
+			window.location.href = "https://soydelivery.com.uy/#/"
 		},
 		ir(){
 		window.event.$emit('touchData')
@@ -117,6 +119,7 @@ export default {
 			this.showSpinner=show
 		}.bind(this))
 
+		await this.getParamNegocioQueNoVenTarifa()
 	},
 }
 </script>
@@ -125,9 +128,6 @@ export default {
 @font-face {
 font-family: "Karla";
 src: url("./assets/Fuente/Karla-Regular.ttf") format("truetype");
-/* url("./assets/Fuente/Karla-Bold.ttf") format("truetype") */
-/* url("./assets/Fuente/Karla-BoldItalic.ttf") format("truetype") */
-/* url("./assets/Fuente/Karla-Italic.ttf") format("truetype"); */
 }
 @font-face {
 font-family: "SimplySans Bold";
@@ -272,6 +272,9 @@ display: none;
 	background-color: #ff7701;
 	padding: 0 10px;
 	text-transform: capitalize;
+}
+.app__linkAnother{
+	text-decoration: none;
 }
 @media screen and (max-width: 600px) {
 .logo img {

@@ -2,7 +2,7 @@
     <article id="payment">
 		<section class="header">
 			<h1>Completa tus datos</h1>
-			<div>
+			<div v-if="canSeeTarifa"> 
 				<p>Tarifa</p>
 				<p>$U {{parseInt(tarifa)}}</p>
 			</div>
@@ -47,14 +47,7 @@
 		<button @click="modalPago" class="bPago">{{datosQuery.status? 'CONFIRMAR': 'PAGAR'}}</button>
 		<modal v-if="pago" @cerrar="cerrarModal" >
 			<div slot="contenido" id="contenido">
-				<!-- <div v-show="!terminos">
-					<embed src="terminos.pdf" type="application/pdf" />
-					<label>
-						<input type="checkbox" name="terminos" id="terminos" v-model="terminos">
-						<span>Acepto los términos y condiciones</span>
-					</label>
-				</div> -->
-				<div v-show=" !datosQuery.status">
+				<div v-show="!datosQuery.status">
 						<ul>
 							<li>
 								<label for="email">Email</label>
@@ -105,10 +98,8 @@
 								<button  @click="pagar()" class="bPago" style="width: 100%;" >Finalizar</button>
 							</li>
 						</ul>
-						<!-- <span v-if="error" class="error">{{error}}</span> -->
-						<!-- <spinner-circular v-if="pagando"/> -->
 				</div>
-				<div v-show="terminos && datosQuery.status && !yaProceso">
+				<div v-show="datosQuery.status && !yaProceso">
 					<h2>RESUMEN</h2>
 					<ul>
 						<li class="fondo">
@@ -135,7 +126,7 @@
 							<p><strong>TIPO DE VEHÍCULO:</strong></p>
 							<p>{{vehiculos.find(y=>y.NegocioTipoVehiculoId==steps.find(x=> x.id==3).data.vehicleType).NegocioTipoVehiculoNombre}}</p>
 						</li>
-						<li class="fondo">
+						<li class="fondo" v-if="canSeeTarifa">
 							<p><strong>TARIFA:</strong></p>
 							<p>$U{{parseInt(tarifa)}}</p>
 						</li>
@@ -155,8 +146,6 @@
 
 <script>
 import s_pagar from './p_pago/s_pagar'
-// import a_test from './p_pago/a_test'
-// *********************  STORE-VUEX ****************************** //
 import {mapState} from 'vuex'
 export default {
   name: 'Payment',
@@ -199,9 +188,13 @@ export default {
 			datosQuery: state => state.datosQuery,
 			steps: state => state.steps,
 			vehiculos: state => state.vehiculos,
-			franjas: state => state.franjas
+			franjas: state => state.franjas,
+			negociosQueNoVenTarifas: state => state.negociosQueNoVenTarifas,
 		}),
-	
+		canSeeTarifa(){
+			let esteNegocioVeTarifa = this.negociosQueNoVenTarifas.filter(negocioId=>negocioId == this.datosQuery.Negocio_Cliente).length == 0
+			return esteNegocioVeTarifa
+		},
 		msjErrorNombre(){
       const errors = []
 
@@ -379,7 +372,7 @@ export default {
         },
 
         pagar () {
-			if(this.terminos){
+			//if(this.terminos){
 				this.pagando = true
 	
 				s_pagar (this)
@@ -388,7 +381,7 @@ export default {
 				this.cerrarModal()
 	
 				this.$store.dispatch('ir', 0)
-			}
+			//}
 
 			// const data = {
 			// 		id: 4,
