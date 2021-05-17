@@ -14,7 +14,7 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios;
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyCIKhelgAY6SeD23WwpjK7Cbip0ifwO-kQ',
+    key: 'AIzaSyDpCfK5NdA1j7xR4TrFGw26XBGftgKNC-I',
     libraries: 'places', 
     region: 'UY',
     language: 'es',

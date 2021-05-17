@@ -24,16 +24,7 @@
                  streetViewControl: false,
             }"
         >
-            <!-- <GmapMarker
-                :key="index"
-                v-for="(m, index) in markers"
-                :position="m.position"
-                :clickable="true"
-                :draggable="true"
-                @position_changed="movePlace"
-                @click="center=m.position"
-                @dragend="changePoint"
-            /> -->
+            
             <GmapMarker
                 v-if="marker"
                 label="★"
